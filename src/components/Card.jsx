@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import Animal from '../Animal'
 import './Card.css'
@@ -40,4 +41,9 @@ export default function Card({ animal, uncovered }) {
         return front
     }
     return back
+}
+
+Card.propTypes = {
+    uncovered: PropTypes.bool.isRequired,
+    animal: PropTypes.instanceOf(Animal).isRequired,
 }
