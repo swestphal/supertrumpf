@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import PropTypes from 'prop-types'
 import './Game.css'
 import Card from './Card'
 import Animal from '../Animal'
@@ -7,6 +7,7 @@ import Animal from '../Animal'
 export default class Game extends Component {
     constructor(props) {
         super(props)
+
         this.state = {
             playersTurn: true,
             player: [
@@ -20,8 +21,10 @@ export default class Game extends Component {
 
     render() {
         const { playersTurn, player, computer } = this.state
+        const { title } = this.props
         return (
             <>
+                <h1>{title}</h1>
                 <div className="info">
                     {playersTurn ? 'Du bist ' : 'Der Computer ist '}
                     an der Reihe
@@ -33,4 +36,11 @@ export default class Game extends Component {
             </>
         )
     }
+}
+Game.defaultProps = {
+    title: 'Supertrumpf',
+}
+
+Game.propTypes = {
+    title: PropTypes.string,
 }
