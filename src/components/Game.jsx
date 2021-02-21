@@ -76,6 +76,22 @@ export default class Game extends Component {
         )
     }
     /* eslint-disable */
+    checkWinner() {
+        alert("huhu")
+        console.log(this.state)
+        if (this.state.player.length === 0) {
+            alert("computer wins");
+
+        }
+        if (this.state.computer.length === 0) {
+
+            alert("computer wins");
+
+
+        }
+    }
+
+
     // eslint-disable-next-line class-methods-use-this
     compare() {
         const { playersTurn } = this.state
@@ -99,23 +115,34 @@ export default class Game extends Component {
 
             // add card to player
             newState.player.push(currentComputer)
+
+            if (!this.state.computer.length) {
+
+                alert("player wins");
+                return
+
+            }
+
+
         } else {
+            this.setState({ playersTurn: false })
             // put current card back
             newState.computer.splice(0, 1)
             newState.computer.push(currentPlayer)
 
-            this.setState({ playersTurn: false })
             // remove card from player
             newState.player.splice(0, 1)
             // add card to computer
             newState.computer.push(currentComputer)
-            this.setState(newState)
+
+            if (!this.state.player.length) {
+                alert("computer wins");
+                return
+            }
         }
-
         this.setState(newState)
-        console.log(this.state)
 
-        // check if card are available
+
 
         // if make current winners card to back
     }
