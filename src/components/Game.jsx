@@ -12,10 +12,45 @@ export default class Game extends Component {
         this.state = {
             playersTurn: true,
             player: [
-                new Animal('Elefant', 'placeholder.png', 3.3, 6000, 70, 1, 40),
+                // eslint-disable-next-line prettier/prettier
+                new Animal(
+                    'Elefant',
+                    'placeholder.png',
+                    3.3,
+                    6000,
+                    70,
+                    1,
+                    40
+                ),
+                new Animal(
+                    'Flusspferd',
+                    'placeholder.png',
+                    1.5,
+                    1800,
+                    50,
+                    1,
+                    30
+                ),
             ],
             computer: [
-                new Animal('Nashorn', 'placeholder.png', 1.9, 2300, 50, 1, 50),
+                // eslint-disable-next-line prettier/prettier
+                new Animal(
+                    'Nashorn',
+                    'placeholder.png',
+                    1.9,
+                    2300,
+                    50,
+                    1,
+                    50),
+                new Animal(
+                    'Krokodil',
+                    'placeholder.png',
+                    5.2,
+                    1000,
+                    70,
+                    60,
+                    29
+                ),
             ],
             selectedProperty: '',
             computerUncovered: false,
@@ -23,12 +58,27 @@ export default class Game extends Component {
     }
 
     onSelectProperty() {
-        return (property) =>
-            this.setState((prevState) => ({
+        return (property) => this.play(property)
+    }
+
+    play(property) {
+        this.setState(
+            (prevState) => ({
                 ...prevState,
                 selectedProperty: property,
                 computerUncovered: true,
-            }))
+            }),
+            () => {
+                setTimeout(() => {
+                    this.compare(property)
+                }, 3000)
+            }
+        )
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    compare() {
+        console.log('compare now')
     }
 
     render() {
