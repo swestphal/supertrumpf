@@ -77,7 +77,7 @@ export default class Game extends Component {
             () => {
                 setTimeout(() => {
                     this.compare(property)
-                }, 100)
+                }, 3000)
             }
         )
     }
@@ -96,8 +96,21 @@ export default class Game extends Component {
             return
         }
         this.setState(newState)
-    }
+        if (!newState.playersTurn) {
+            setTimeout(() => {
+                console.log("Computer ist dran")
+                const property = this.selectRandomProperty()
+                this.play(property)
+            }, 3000)
 
+        }
+    }
+    selectRandomProperty() {
+        const properties = Object.keys(Animal.properties)
+        const index = Math.floor(Math.random() * properties.length)
+        console.log(properties[index])
+        return properties[index]
+    }
 
     // eslint-disable-next-line class-methods-use-this
     compare() {
@@ -111,7 +124,7 @@ export default class Game extends Component {
         // if i greater
         const newState = { ...this.state }
         if (currentPlayer[this.state.selectedProperty] > currentComputer[this.state.selectedProperty]) {
-            this.setState({ playersTurn: true })
+            newState.playersTurn = true
 
             // put current card back
             newState.player.splice(0, 1)
@@ -123,11 +136,12 @@ export default class Game extends Component {
             // add card to player
             newState.player.push(currentComputer)
 
+            newState.computerUncovered = false
 
-
+            console.log("du hast gewonnen")
 
         } else {
-            this.setState({ playersTurn: false })
+            newState.playersTurn = false
             // put current card back
             newState.computer.splice(0, 1)
             newState.computer.push(currentPlayer)
@@ -137,7 +151,9 @@ export default class Game extends Component {
             // add card to computer
             newState.computer.push(currentComputer)
 
+            newState.computerUncovered = true
 
+            console.log("computer hat gewonnen")
         }
         this.checkWinner(newState)
 
@@ -166,7 +182,7 @@ export default class Game extends Component {
                 <div className="cards">
                     <Card
                         animal={player[0]}
-                        uncovered={playersTurn}
+                        uncovered={true}
                         selectedProperty={selectedProperty}
                         onSelectProperty={this.onSelectProperty()}
                     />
