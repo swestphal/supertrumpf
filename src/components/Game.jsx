@@ -83,22 +83,27 @@ export default class Game extends Component {
         const currentPlayer = this.state.player[0]
         // eslint-disable-next-line react/destructuring-assignment
         const currentComputer = this.state.computer[0]
-        console.log(playersTurn)
-        console.log(currentPlayer)
-        console.log(currentComputer)
-        console.log('ich ', this.state.player)
-        console.log('computer ', this.state.computer)
+
 
         // if i greater
         const newState = { ...this.state }
         if (currentPlayer[this.state.selectedProperty] > currentComputer[this.state.selectedProperty]) {
             this.setState({ playersTurn: true })
+
+            // put current card back
+            newState.player.splice(0, 1)
+            newState.player.push(currentPlayer)
+
             // remove card from computer
             newState.computer.splice(0, 1)
+
             // add card to player
             newState.player.push(currentComputer)
-            this.setState(newState)
         } else {
+            // put current card back
+            newState.computer.splice(0, 1)
+            newState.computer.push(currentPlayer)
+
             this.setState({ playersTurn: false })
             // remove card from player
             newState.player.splice(0, 1)
@@ -106,6 +111,13 @@ export default class Game extends Component {
             newState.computer.push(currentComputer)
             this.setState(newState)
         }
+
+        this.setState(newState)
+        console.log(this.state)
+
+        // check if card are available
+
+        // if make current winners card to back
     }
 
     render() {
