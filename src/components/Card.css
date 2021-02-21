@@ -14,7 +14,7 @@ h1 {
 }
 
 .card.back {
-    height:388px;
+    height:403px;
     background-color:green;
 }
 table {
@@ -28,6 +28,10 @@ td {
 
 tr:nth-child(2n-1) {
     background-color:#ddd
+}
+
+tr:nth-child(2n-1).active,.active {
+    background-color:yellow;
 }
 
 img {
