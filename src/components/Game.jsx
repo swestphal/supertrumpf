@@ -4,57 +4,63 @@ import PropTypes from 'prop-types'
 import './Game.css'
 import Card from './Card'
 import Animal from '../Animal'
-
+/* eslint-disable */
 export default class Game extends Component {
     constructor(props) {
         super(props)
 
-        this.state = {
-            playersTurn: true,
-            player: [
-                // eslint-disable-next-line prettier/prettier
-                new Animal(
-                    'Elefant',
-                    'placeholder.png',
-                    3.3,
-                    6000,
-                    70,
-                    1,
-                    40
-                ),
-                new Animal(
-                    'Flusspferd',
-                    'placeholder.png',
-                    1.5,
-                    1800,
-                    50,
-                    1,
-                    30
-                ),
-            ],
-            computer: [
-                // eslint-disable-next-line prettier/prettier
-                new Animal(
-                    'Nashorn',
-                    'placeholder.png',
-                    1.9,
-                    2300,
-                    50,
-                    1,
-                    50),
-                new Animal(
-                    'Krokodil',
-                    'placeholder.png',
-                    5.2,
-                    1000,
-                    70,
-                    60,
-                    29
-                ),
-            ],
-            selectedProperty: '',
-            computerUncovered: false,
-        }
+        this.state = this.getInitialState()
+    }
+
+    getInitialState = () => ({
+        playersTurn: true,
+        player: [
+            // eslint-disable-next-line prettier/prettier
+            new Animal(
+                'Elefant',
+                'placeholder.png',
+                3.3,
+                6000,
+                70,
+                1,
+                40
+            ),
+            new Animal(
+                'Flusspferd',
+                'placeholder.png',
+                1.5,
+                1800,
+                50,
+                1,
+                30
+            ),
+        ],
+        computer: [
+            // eslint-disable-next-line prettier/prettier
+            new Animal(
+                'Nashorn',
+                'placeholder.png',
+                1.9,
+                2300,
+                50,
+                1,
+                50),
+            new Animal(
+                'Krokodil',
+                'placeholder.png',
+                5.2,
+                1000,
+                70,
+                60,
+                29
+            ),
+        ],
+        selectedProperty: '',
+        computerUncovered: false,
+    })
+
+    resetState = () => {
+        this.setState(this.getInitialState());
     }
 
     onSelectProperty() {
@@ -75,20 +81,21 @@ export default class Game extends Component {
             }
         )
     }
-    /* eslint-disable */
-    checkWinner() {
-        alert("huhu")
-        console.log(this.state)
-        if (this.state.player.length === 0) {
+
+    checkWinner(newState) {
+
+        if (!newState.player.length) {
             alert("computer wins");
-
+            this.resetState()
+            return
         }
-        if (this.state.computer.length === 0) {
+        if (!newState.computer.length) {
 
-            alert("computer wins");
-
-
+            alert("player wins");
+            this.resetState()
+            return
         }
+        this.setState(newState)
     }
 
 
@@ -116,12 +123,7 @@ export default class Game extends Component {
             // add card to player
             newState.player.push(currentComputer)
 
-            if (!this.state.computer.length) {
 
-                alert("player wins");
-                return
-
-            }
 
 
         } else {
@@ -135,12 +137,9 @@ export default class Game extends Component {
             // add card to computer
             newState.computer.push(currentComputer)
 
-            if (!this.state.player.length) {
-                alert("computer wins");
-                return
-            }
+
         }
-        this.setState(newState)
+        this.checkWinner(newState)
 
 
 
