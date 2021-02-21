@@ -71,14 +71,41 @@ export default class Game extends Component {
             () => {
                 setTimeout(() => {
                     this.compare(property)
-                }, 3000)
+                }, 100)
             }
         )
     }
-
+    /* eslint-disable */
     // eslint-disable-next-line class-methods-use-this
     compare() {
-        console.log('compare now')
+        const { playersTurn } = this.state
+        // eslint-disable-next-line react/destructuring-assignment
+        const currentPlayer = this.state.player[0]
+        // eslint-disable-next-line react/destructuring-assignment
+        const currentComputer = this.state.computer[0]
+        console.log(playersTurn)
+        console.log(currentPlayer)
+        console.log(currentComputer)
+        console.log('ich ', this.state.player)
+        console.log('computer ', this.state.computer)
+
+        // if i greater
+        const newState = { ...this.state }
+        if (currentPlayer[this.state.selectedProperty] > currentComputer[this.state.selectedProperty]) {
+            this.setState({ playersTurn: true })
+            // remove card from computer
+            newState.computer.splice(0, 1)
+            // add card to player
+            newState.player.push(currentComputer)
+            this.setState(newState)
+        } else {
+            this.setState({ playersTurn: false })
+            // remove card from player
+            newState.player.splice(0, 1)
+            // add card to computer
+            newState.computer.push(currentComputer)
+            this.setState(newState)
+        }
     }
 
     render() {
